@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import AdvReduxForm from "./reduxForms/advForm";
 
 class NameForm extends React.Component {
     constructor(props) {
@@ -16,19 +17,22 @@ class NameForm extends React.Component {
 
     handleSubmit(event) {
         alert('Отправленное имя: ' + this.state.value);
-        axios.post('http://localhost:4000/form', {formData: 'fgdgdf'})
+        axios.post('http://localhost:4000/form', {formData: this.state.value})
         event.preventDefault();
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Имя:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Отправить" />
-            </form>
+            <div>
+                {/*<AdvReduxForm/>*/}
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Имя:
+                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    </label>
+                    <input type="submit" value="Отправить"/>
+                </form>
+            </div>
         );
     }
 }
