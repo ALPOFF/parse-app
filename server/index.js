@@ -14,14 +14,43 @@ app.get('/', function(req, res) {
         res.send('Hello World')
     })
     .post('/form', function(req, res) {
-        let formData = req.body.formData;
-        console.log('formData:', formData);
-        fs.writeFile("./uploads/hello.txt", `<style>${formData}</style>`, function(error) {
+        let advType = req.body.advType;
+        let advCat = req.body.advCat;
+        let checkBorder = req.body.checkBorder;
+        let advText = req.body.advText;
+        let phone = req.body.phone;
 
+        const adv = [{
+                "НЕДВИЖИМОСТЬ": ["ПРОДАЮ", "КУПЛЮ", "СДАЮ", "МЕНЯЮ"]
+            }, {
+                "АВТОРЫНОК": ["Продаю", "АВТОЗАПЧАСТИ", "КУПЛЮ"]
+            }, {
+                "ВСЯКАЯ ВСЯЧИНА": ["ПРОДАЮ", "КУПЛЮ"]
+            }, "УСЛУГИ", {
+                "РАБОТА": ["Требуются", "Ищу работу"]
+            }, "ЖИВОТНЫЕ",
+            "РАЗНОЕ", "ПРИМУ В ДАР"
+        ]
+
+        let templateBorderTrue = `<pstyle:В рамке>`;
+        let advFinalText = `${advText} + ' Т. ' + ${phone}`;
+
+        let advFinal = checkBorder ? `${templateBorderTrue} + ${advFinalText}` : advFinalText
+
+        console.log('phone:', phone);
+        console.log('checkBorder:', checkBorder);
+        console.log('advType:', advType);
+        console.log('advCat:', advCat);
+        console.log('advText:', advText);
+        // fs.writeFile("./uploads/hello.txt", `<style>${phone}</style>`, function(error) {
+
+        //     if (error) throw error; // если возникла ошибка
+        //     let data = fs.readFile("./uploads/hello.txt", "utf8");
+        //     console.log(data); // выводим считанные данные
+        // });
+        fs.readFile("./uploads/edit.txt", "utf8", (error, data) => {
             if (error) throw error; // если возникла ошибка
-            console.log("Асинхронная запись файла завершена. Содержимое файла:");
-            let data = fs.readFileSync("./uploads/hello.txt", "utf8");
-            console.log(data); // выводим считанные данные
+            console.log(data.indexOf('<pstyle:Подзаголовок 2>КУПЛЮ'))
         });
         //res.send('ok')
     })

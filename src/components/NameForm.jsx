@@ -5,33 +5,32 @@ import AdvReduxForm from "./reduxForms/advForm";
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert('Отправленное имя: ' + this.state.value);
-        axios.post('http://localhost:4000/form', {formData: this.state.value})
-        event.preventDefault();
+        this.state = {value: '', typeNum: null};
     }
 
     render() {
+        const onSubmitTask = (formData) => {
+            console.log(formData.phoneName)
+            console.log(formData.checkBorder)
+            console.log(formData.advType)
+            console.log(formData.advCat)
+            console.log(formData.advText)
+            axios.post('http://localhost:4000/form', {
+                phone: formData.phoneName,
+                checkBorder: formData.checkBorder,
+                advType: formData.advType,
+                advCat: formData.advCat,
+                advText: formData.advText
+            })
+        };
+
+        const selectType = (val) => {
+            this.setState({typeNum: val})
+        }
+
         return (
             <div>
-                {/*<AdvReduxForm/>*/}
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Имя:
-                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Отправить"/>
-                </form>
+                <AdvReduxForm onSubmit={onSubmitTask} selectType={selectType} typeNum={this.state.typeNum}/>
             </div>
         );
     }
