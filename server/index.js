@@ -99,11 +99,6 @@ app.get('/', function(req, res) {
             let startPart = data.substring(0, data.indexOf(subtitle1) + subtitle1.length);
 
             if (adv[Number(advType) + 1] == undefined) {
-                console.log('bad')
-
-                //let lastPart = data.substring(data.indexOf(subtitle1next));
-                // let middlePart = data.substring(data.indexOf(subtitle1) + subtitle1.length, data.indexOf(subtitle1next));
-
                 if (advCat != undefined) {
                     if (adv[advType].optData[Number(advCat) + 1] == undefined) {
                         let result = data + advFinal;
@@ -111,25 +106,13 @@ app.get('/', function(req, res) {
                             if (error) throw error; // если возникла ошибка
                         });
                     } else {
-
-                    	console.log(startPart)
-
                         let subtitle2 = `<pstyle:Подзаголовок 2>${adv[advType].optData[advCat].txt}`; //подзаголовок 2
                         let subtitle2next = `<pstyle:Подзаголовок 2>${adv[advType].optData[Number(advCat)+1].txt}`; //подзаголовок 2 next
                         let middlePart = data.substring(data.indexOf(subtitle1) + subtitle1.length);
                         let startPartIn = middlePart.substring(0, middlePart.indexOf(subtitle2next))
                         let lastPartIn = middlePart.substring(middlePart.indexOf(subtitle2next))
-                        // let startPartIn = middlePart.substring(0, middlePart.indexOf(subtitle2) + subtitle2.length);
-                        // let lastPartIn = middlePart.substring(middlePart.indexOf(subtitle2next));
-                        // let middlePartIn = middlePart.substring(middlePart.indexOf(subtitle2) + subtitle2.length, middlePart.indexOf(subtitle2next));
-                        // let newMiddlePartIn = middlePartIn + advFinal;
-                        // let resultIn = startPartIn + newMiddlePartIn + '\n' + lastPartIn;
-                        // let result = startPart + resultIn + lastPart;
                         let newMiddlePartIn = startPartIn + advFinal + '\n' + lastPartIn;
                         let result = startPart + newMiddlePartIn
-
-                        console.log('subtitle2:', startPart)
-
 
                         fs.writeFile("./uploads/edit.txt", result, (error) => {
                             if (error) throw error; // если возникла ошибка
@@ -144,20 +127,11 @@ app.get('/', function(req, res) {
                 } else {
                     console.log('some error')
                 }
-
-
-
-
-
-
-
             } else {
 
                 let subtitle1next = `<pstyle:Подзаголовок 1>${adv[Number(advType)+1].data}`; //подзаголовок 1 next
                 let lastPart = data.substring(data.indexOf(subtitle1next));
                 let middlePart = data.substring(data.indexOf(subtitle1) + subtitle1.length, data.indexOf(subtitle1next));
-
-
                 if (advCat != undefined) {
                     if (adv[advType].optData[Number(advCat) + 1] == undefined) {
                         let newMiddlePart = middlePart + advFinal;
@@ -174,8 +148,6 @@ app.get('/', function(req, res) {
                         let newMiddlePartIn = middlePartIn + advFinal;
                         let resultIn = startPartIn + newMiddlePartIn + '\n' + lastPartIn;
                         let result = startPart + resultIn + lastPart;
-
-                        console.log('subtitle2:', result)
 
                         fs.writeFile("./uploads/edit.txt", result, (error) => {
                             if (error) throw error; // если возникла ошибка
